@@ -140,10 +140,10 @@ NcmDumpError ncm_dump(std::ifstream &input, std::filesystem::path &outputFolder)
     input.read(reinterpret_cast<char *>(lenBuf), 4);
     len = (lenBuf[3] << 8 | lenBuf[2]) << 16 | (lenBuf[1] << 8 | lenBuf[0]);
     memset(lenBuf, 0, sizeof(lenBuf)); // reset buffer
-    std::vector<uint8_t> coverData(len);
-    input.read(reinterpret_cast<char *>(coverData.data()), len);
+    // std::vector<uint8_t> coverData(len);
+    // input.read(reinterpret_cast<char *>(coverData.data()), len);
+    input.seekg(len, std::ios::cur); // skip cover data
 
-    // TODO: write music tags
     std::string musicName = metaJson["musicName"];
     std::string album = metaJson["album"];
     std::vector<std::vector<nlohmann::json>> artist = metaJson["artist"]; // [["Name", uid], ...]
@@ -193,7 +193,6 @@ NcmDumpError ncm_dump(std::ifstream &input, std::filesystem::path &outputFolder)
         }
     }
 
-    // output.write(reinterpret_cast<const char *>(musicData.data()), static_cast<std::streamsize>(musicData.size()));
     output.flush();
     output.close();
 
