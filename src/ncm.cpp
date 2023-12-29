@@ -4,7 +4,9 @@
 #include <fstream>
 #include <memory>
 
-constexpr size_t READ_DATA_BUFFER_SIZE = 1024 * 1024 * 8; // for read/decode/write music data buffer
+#ifndef  READ_DATA_BUFFER_SIZE
+#define READ_DATA_BUFFER_SIZE 1024 * 1024 * 8
+#endif
 
 constexpr uint8_t MAGIC_HEADER[] = {0X43, 0X54, 0X45, 0X4E, 0X46, 0X44, 0X41, 0X4D};
 constexpr uint8_t CORE_KEY[] = {
